@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,5 +72,17 @@ public class RekapLiveApiController {
     RekapLiveDto rekapLiveDto = modelMapper.map(rekapLive, RekapLiveDto.class);
     rekapLiveDto.setTanggal(rekapLive.getTanggal());
     return rekapLiveDto;
+  }
+
+  private RekapLive convertToEntity(RekapLiveDto rekapLiveDto) throws ParseException {
+    RekapLive rekapLive = modelMapper.map(rekapLiveDto, RekapLive.class);
+    rekapLive.setTanggal(rekapLiveDto.getTanggal());
+
+    if (rekapLiveDto.getId() != null) {
+      RekapLive oldRekapLive = rekapLivaRepository.findById(rekapLiveDto.getId()).get();
+      rekapLive.setId(oldRekapLive.getId());
+      rekapLive.setCatat(oldRekapLive.getCatat());
+    }
+    return rekapLive;
   }
 }
