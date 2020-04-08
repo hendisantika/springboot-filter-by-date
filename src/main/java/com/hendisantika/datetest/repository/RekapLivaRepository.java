@@ -1,5 +1,6 @@
-package com.hendisantika.datetest;
+package com.hendisantika.datetest.repository;
 
+import com.hendisantika.datetest.entity.RekapLive;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Date;
